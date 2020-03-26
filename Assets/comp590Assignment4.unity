@@ -526,6 +526,19 @@ MonoBehaviour:
   score: {fileID: 1865244811}
   displayscore: {fileID: 1277727258}
   count: 0
+--- !u!114 &214160028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214160025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5413ad427362b4f318f714ac5bbb70f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treasurehunter: {fileID: 214160025}
 --- !u!114 &214160032
 MonoBehaviour:
   m_ObjectHideFlags: 0
