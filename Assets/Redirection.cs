@@ -6,9 +6,11 @@ public class Redirection : MonoBehaviour
 {
 
     public GameObject treasurehunter;
+    public GameObject trackingspace;
     private Vector3 prevforward;
     private float prevyaw;
     private Camera cam;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +18,7 @@ public class Redirection : MonoBehaviour
         prevforward = cam.transform.forward;
         Vector2 forward = new Vector2(cam.transform.forward.x, cam.transform.forward.z);
         //need to check if camera position is relative to vr tracking origin, and if that origin is 0,0......
-        Vector2 origin = new Vector2(0-cam.transform.position.x, 0-cam.transform.position.z);
+        Vector2 origin = new Vector2(trackingspace.transform.position.x-cam.transform.position.x, trackingspace.transform.position.z-cam.transform.position.z);
         prevyaw = angleBetween(forward, origin);
         
     }
@@ -25,15 +27,22 @@ public class Redirection : MonoBehaviour
     void Update()
     {
         float newrotate = angleBetween(prevforward, cam.transform.forward);
-
-
-
-
-
-        prevforward = cam.transform.forward;
+        int rotateside = (whichSide(cam.transform.position+prevforward, cam.transform.position, cam.transform.position+cam.transform.forward)<0)?1:-1;
         Vector2 forward = new Vector2(cam.transform.forward.x, cam.transform.forward.z);
-        //need to check if camera position is relative to vr tracking origin, and if that origin is 0,0......
-        Vector2 origin = new Vector2(0-cam.transform.position.x, 0-cam.transform.position.z);
+        Vector2 origin = new Vector2(trackingspace.transform.position.x-cam.transform.position.x, trackingspace.transform.position.z-cam.transform.position.z);
+        float deltayaw = prevyaw - angleBetween(forward, origin);
+        float distance = origin.magnitude;
+        float longestdim = 5f;
+        float threshhold = 0;
+        if(deltayaw<0){
+            threshhold = -0.13f;
+        }else{
+            threshhold = 0.3f;
+        }
+        float accelby = threshhold*deltayaw*rotateside*Mathf.Clamp(distance/longestdim/2,0,1);
+
+        trackingspace.transform.RotateAround(cam.transform.position,new Vector3(0,1,0),accelby);
+        prevforward = cam.transform.forward;
         prevyaw = angleBetween(forward, origin);
     }
 

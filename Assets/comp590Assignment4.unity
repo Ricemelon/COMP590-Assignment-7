@@ -538,7 +538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5413ad427362b4f318f714ac5bbb70f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treasurehunter: {fileID: 214160025}
+  treasurehunter: {fileID: 811704472}
+  trackingspace: {fileID: 444521429}
 --- !u!114 &214160032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,6 +863,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+--- !u!1 &444521429 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 159718, guid: 126d619cf4daa52469682f85c1378b4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 444521428}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &455005179
 PrefabInstance:
   m_ObjectHideFlags: 0
