@@ -10,6 +10,7 @@ public class Redirection : MonoBehaviour
     private Vector3 prevforward;
     private float prevyaw;
     private Camera cam;
+    private Vector3 prevpos;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,8 @@ public class Redirection : MonoBehaviour
         //need to check if camera position is relative to vr tracking origin, and if that origin is 0,0......
         Vector2 origin = new Vector2(trackingspace.transform.position.x-cam.transform.position.x, trackingspace.transform.position.z-cam.transform.position.z);
         prevyaw = angleBetween(forward, origin);
+
+        prevpos = cam.transform.position;
         
     }
 
@@ -48,6 +51,13 @@ public class Redirection : MonoBehaviour
         }
         prevforward = cam.transform.forward;
         prevyaw = angleBetween(forward, origin);
+
+
+        //translational motion
+        Vector3 trajectory = cam.transform.position - prevpos;
+        Vector3 translate = trajectory.normalized*0.5f;
+        trackingspace.transform.position+=translate;
+        prevpos = cam.transform.position;
     }
 
     private float whichSide(Vector3 a, Vector3 b, Vector3 c){
