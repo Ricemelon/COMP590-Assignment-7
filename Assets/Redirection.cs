@@ -55,7 +55,7 @@ public class Redirection : MonoBehaviour
 
         //translational motion
         Vector3 trajectory = cam.transform.position - prevpos;
-        Vector3 translate = trajectory.normalized*0.5f;
+        Vector3 translate = trajectory.normalized*0.05f;
         trackingspace.transform.position+=translate;
         prevpos = cam.transform.position;
     }

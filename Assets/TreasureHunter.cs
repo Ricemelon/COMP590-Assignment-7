@@ -41,12 +41,12 @@ public class TreasureHunter : MonoBehaviour
             head.transform.rotation = new Quaternion(0,0,0,0);
         }
         if(Input.GetKeyDown("9")){ //code for how to raycast was based off of Nick Rewkowski's VrPawn teleport code
-            RaycastHit outHit;
-            if(Physics.Raycast(rightPointerObject.transform.position,rightPointerObject.transform.forward,out outHit, 100.0f)){
-                if(outHit.collider.gameObject.GetComponent("CollectibleTreasure")){
+            Collider[] grip = Physics.OverlapSphere(center.transform.position,0.1f,collectiblesMask);
+            if(grip.Length>0){
+                if(grip[0].gameObject.GetComponent("CollectibleTreasure")){
                     print("hit");
-                    GameObject item = outHit.collider.gameObject;
-                    /*string objectname = outHit.collider.gameObject.GetComponent<CollectibleTreasure>().name;
+                    GameObject item = grip[0].gameObject;
+                    string objectname = grip[0].gameObject.GetComponent<CollectibleTreasure>().name;
                     bool exist = false;
                     for(int i=0;i<inventory.treasures.Count;i++){
                         if(inventory.treasures.ElementAt(i).name==objectname){
@@ -55,9 +55,9 @@ public class TreasureHunter : MonoBehaviour
                         }
                     }
                     if(exist==false){
-                        inventory.treasures.Add(outHit.collider.gameObject.GetComponent<CollectibleTreasure>());
+                        inventory.treasures.Add(grip[0].gameObject.GetComponent<CollectibleTreasure>());
                         inventory.amount.Add(1);
-                    }*/
+                    }
                     /*if(objectname==1){
                         numberofEach[0]++;
                     } else if(objectvalue==5){
@@ -65,7 +65,7 @@ public class TreasureHunter : MonoBehaviour
                     } else if(objectvalue==10){
                         numberofEach[2]++;
                     }*/
-                    Destroy(outHit.collider.gameObject);
+                    Destroy(grip[0].gameObject);
                     int sum = 0;
                     int totalitems = 0;
                     int spheres = 0;
