@@ -26,9 +26,10 @@ public class Redirection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float newrotate = angleBetween(prevforward, cam.transform.forward);
-        int rotateside = (whichSide(cam.transform.position+prevforward, cam.transform.position, cam.transform.position+cam.transform.forward)<0)?1:-1;
+        Vector2 prev = new Vector2(prevforward.x, prevforward.z);
         Vector2 forward = new Vector2(cam.transform.forward.x, cam.transform.forward.z);
+        float newrotate = angleBetween(prev, forward);
+        int rotateside = (whichSide(cam.transform.position+prevforward, cam.transform.position, cam.transform.position+cam.transform.forward)<0)?-1:1;
         Vector2 origin = new Vector2(trackingspace.transform.position.x-cam.transform.position.x, trackingspace.transform.position.z-cam.transform.position.z);
         float deltayaw = prevyaw - angleBetween(forward, origin);
         float distance = origin.magnitude;
@@ -39,9 +40,12 @@ public class Redirection : MonoBehaviour
         }else{
             threshhold = 0.3f;
         }
-        float accelby = threshhold*deltayaw*rotateside*Mathf.Clamp(distance/longestdim/2,0,1);
+        float accelby = threshhold*newrotate*rotateside*Mathf.Clamp(distance/longestdim/2,0,1);
+        print(prevforward+ " and "+cam.transform.forward + " and "+newrotate + " and "+accelby);
 
-        trackingspace.transform.RotateAround(cam.transform.position,new Vector3(0,1,0),accelby);
+        if(Mathf.Abs(accelby)>0){
+            trackingspace.transform.RotateAround(cam.transform.position,new Vector3(0,1,0),accelby);
+        }
         prevforward = cam.transform.forward;
         prevyaw = angleBetween(forward, origin);
     }
@@ -57,7 +61,7 @@ public class Redirection : MonoBehaviour
         a.Normalize();
         b.Normalize();
         var dot = Vector2.Dot(a, b);
-        return Mathf.Acos(dot);
+        return Mathf.Rad2Deg*Mathf.Acos(dot);
 
     }
 }
