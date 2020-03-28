@@ -44,7 +44,7 @@ public class Redirection : MonoBehaviour
             threshhold = 0.3f;
         }
         float accelby = threshhold*newrotate*rotateside*Mathf.Clamp(distance/longestdim/2,0,1);
-        print(prevforward+ " and "+cam.transform.forward + " and "+newrotate + " and "+accelby);
+        //print(prevforward+ " and "+cam.transform.forward + " and "+newrotate + " and "+accelby);
 
         if(Mathf.Abs(accelby)>0){
             trackingspace.transform.RotateAround(cam.transform.position,new Vector3(0,1,0),accelby);
